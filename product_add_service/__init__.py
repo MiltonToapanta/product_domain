@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from .config import Config
+from config import Config
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -13,7 +13,7 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
 
-    from .routes.product_routes import product_bp
+    from routes.product_routes import product_bp
     app.register_blueprint(product_bp, url_prefix="/api/products")
 
     return app

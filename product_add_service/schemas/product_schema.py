@@ -1,5 +1,5 @@
-from product_add_service import ma
-from product_add_service.models.product import Product
+from __init__ import ma
+from models.product import Product
 
 class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

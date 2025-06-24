@@ -1,8 +1,10 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from product_add_service import create_app, db
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
+from __init__ import create_app, db
 import os
 
 app = create_app()

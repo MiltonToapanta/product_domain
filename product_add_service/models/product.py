@@ -1,5 +1,4 @@
-from product_add_service import db
-import uuid
+from __init__ import db
 
 class Product(db.Model):
     __tablename__ = "productos"
