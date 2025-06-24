@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+# Environment / virtualenv
+venv/
+env/
+ENV/
+.venv/
+# Flask stuff
+instance/
+*.pyc
+*.pyo
+# SQLite database files
+*.db
+# Migrations
+migrations/
+migrations/*.pyc
+migrations/*.pyo
+# Pytest cache
+.pytest_cache/
+# VSCode settings
+.vscode/
+# mypy
+.mypy_cache/
+# pipenv
+Pipfile.lock
+# dotenv environment variables file
+.env
+# Flask marshmallow cache
+*.cache
