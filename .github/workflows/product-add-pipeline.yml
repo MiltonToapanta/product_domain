@@ -33,7 +33,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        working-directory: ./product-add-service
+        working-directory: ./product_add_service
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product_add_service:latest .
 
       - name: Push Docker image to DockerHub
