@@ -56,8 +56,8 @@ jobs:
             docker rm product_update_service || true
             docker run --restart always \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              -e PORT=${{ secrets.PORT_update }} \
+              -e PORT=${{ secrets.PORT_UPDATE }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
               -d --name product_update_service \
-              -p ${{ secrets.PORT_update }}:${{ secrets.PORT_update }} \
+              -p ${{ secrets.PORT_UPDATE }}:${{ secrets.PORT_UPDATE }} \
               ${{ secrets.DOCKER_USERNAME }}/product_update_service:latest
