@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build Docker image
-        run: docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/product-add-service:latest .
+        run: docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/product-add-service:latest ./product-add-service
 
       - name: Push Docker image to Dockerhub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/product-add-service:latest
