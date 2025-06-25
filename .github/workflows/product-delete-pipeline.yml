@@ -56,8 +56,8 @@ jobs:
             docker rm product_delete_service || true
             docker run --restart always \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              -e PORT=${{ secrets.PORT_delete }} \
+              -e PORT=${{ secrets.PORT_DELETE }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
               -d --name product_delete_service \
-              -p ${{ secrets.PORT_delete }}:${{ secrets.PORT_delete }} \
+              -p ${{ secrets.PORT_DELETE }}:${{ secrets.PORT_DELETE }} \
               ${{ secrets.DOCKER_USERNAME }}/product_delete_service:latest
