@@ -56,8 +56,8 @@ jobs:
             docker rm product_find_by_name_service || true
             docker run --restart always \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              -e PORT=${{ secrets.PORT-find_by_name }} \
+              -e PORT=${{ secrets.PORT_FIN_BY_NAME }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
               -d --name product_find_by_name_service \
-              -p ${{ secrets.PORT-find_by_name }}:${{ secrets.PORT-find_by_name }} \
+              -p ${{ secrets.PORT_FIN_BY_NAME }}:${{ secrets.PORT_FIN_BY_NAME }} \
               ${{ secrets.DOCKER_USERNAME }}/product_find_by_name_service:latest
