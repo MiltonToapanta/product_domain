@@ -1,0 +1,63 @@
+name: Pipeline for Product find by name Microservice
+
+on:
+  push:
+    branches:
+      - QA
+    paths:
+      - 'product_find_by_name_service/**'
+      - '.github/workflows/product-find-by-name-pipeline.yml'
+  pull_request:
+    branches:
+      - QA
+    paths:
+      - 'product_find_by_name_service/**'
+      - '.github/workflows/product-find-by-name-pipeline.yml'
+
+jobs:
+  build-and-push-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Show current directory and files (debug)
+        run: |
+          pwd
+          ls -R
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        working-directory: ./product_find_by_name_service
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product_find_by_name_service:latest .
+
+      - name: Push Docker image to DockerHub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/product_find_by_name_service:latest
+
+  deploy-to-ec2-instance:
+    needs: build-and-push-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST_TEST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            echo "Pull, stop, and redeploy the Docker container"
+            docker pull ${{ secrets.DOCKER_USERNAME }}/product_find_by_name_service:latest
+            docker stop product_find_by_name_service || true
+            docker rm product_find_by_name_service || true
+            docker run --restart always \
+              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              -e PORT=${{ secrets.PORT-find_by_name }} \
+              -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+              -d --name product_find_by_name_service \
+              -p ${{ secrets.PORT-find_by_name }}:${{ secrets.PORT-find_by_name }} \
+              ${{ secrets.DOCKER_USERNAME }}/product_find_by_name_service:latest
