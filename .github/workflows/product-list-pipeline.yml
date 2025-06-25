@@ -56,8 +56,8 @@ jobs:
             docker rm product_list_service || true
             docker run --restart always \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              -e PORT=${{ secrets.PORT-list }} \
+              -e PORT=${{ secrets.PORT_LIST }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
               -d --name product_list_service \
-              -p ${{ secrets.PORT-list }}:${{ secrets.PORT-list }} \
+              -p ${{ secrets.PORT_LIST }}:${{ secrets.PORT_LIST }} \
               ${{ secrets.DOCKER_USERNAME }}/product_list_service:latest
