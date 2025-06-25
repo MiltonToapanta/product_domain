@@ -5,13 +5,13 @@ on:
     branches:
       - QA
     paths:
-      - 'product-add-service/**'
+      - 'product_add_service/**'
       - '.github/workflows/product-add-pipeline.yml'
   pull_request:
     branches:
       - QA
     paths:
-      - 'product-add-service/**'
+      - 'product_add_service/**'
       - '.github/workflows/product-add-pipeline.yml'
 
 jobs:
@@ -34,10 +34,10 @@ jobs:
 
       - name: Build Docker image
         working-directory: ./product-add-service
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product-add-service:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product_add_service:latest .
 
       - name: Push Docker image to DockerHub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/product-add-service:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/product_add_service:latest
 
   deploy-to-ec2-instance:
     needs: build-and-push-docker
@@ -51,13 +51,13 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             echo "Pull, stop, and redeploy the Docker container"
-            docker pull ${{ secrets.DOCKER_USERNAME }}/product-add-service:latest
-            docker stop product-add-service || true
-            docker rm product-add-service || true
+            docker pull ${{ secrets.DOCKER_USERNAME }}/product_add_service:latest
+            docker stop product_add_service || true
+            docker rm product_add_service || true
             docker run --restart always \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
               -e PORT=${{ secrets.PORT_ADD }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-              -d --name product-add-service \
+              -d --name product_add_service \
               -p ${{ secrets.PORT_ADD }}:${{ secrets.PORT_ADD }} \
-              ${{ secrets.DOCKER_USERNAME }}/product-add-service:latest
+              ${{ secrets.DOCKER_USERNAME }}/product_add_service:latest
