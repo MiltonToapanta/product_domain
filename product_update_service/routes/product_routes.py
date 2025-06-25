@@ -2,10 +2,13 @@ from flask import Blueprint, request, jsonify
 from __init__ import db
 from models.product import Product
 from schemas.product_schema import product_schema
+#Descomentar para usar validación JWT Token
+#from flask_jwt_extended import jwt_required, get_jwt_identity
 
 product_bp = Blueprint("product_bp", __name__)
 
 @product_bp.route("/update/<int:product_id>", methods=["PUT"])
+#@jwt_required()
 def actualizar_producto(product_id):
     producto = Product.query.get(product_id)
     if not producto:
