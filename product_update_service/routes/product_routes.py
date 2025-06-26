@@ -34,3 +34,7 @@ def actualizar_producto(product_id):
     db.session.commit()
 
     return product_schema.jsonify(producto), 200
+# Healthcheck route
+@product_bp.route("/", methods=["GET"])
+def healthcheck():
+    return jsonify({"status": "Service is up and running"}), 200

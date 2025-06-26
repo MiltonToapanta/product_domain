@@ -14,3 +14,7 @@ def listar_productos():
     return products_schema.jsonify(productos), 200
 
 
+# Healthcheck route
+@product_bp.route("/", methods=["GET"])
+def healthcheck():
+    return jsonify({"status": "Service is up and running"}), 200

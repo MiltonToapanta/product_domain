@@ -16,3 +16,8 @@ def buscar_producto():
 
     resultados = Product.query.filter(Product.nombre.ilike(f"%{nombre}%")).all()
     return products_schema.jsonify(resultados), 200
+
+# Healthcheck route
+@product_bp.route("/", methods=["GET"])
+def healthcheck():
+    return jsonify({"status": "Service is up and running"}), 200
