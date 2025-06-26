@@ -18,6 +18,7 @@ def crear_producto():
     return product_schema.jsonify(nuevo), 201
 
 
+
 # Healthcheck route
 @product_bp.route("/", methods=["GET"])
 def healthcheck():
