@@ -16,6 +16,8 @@ def crear_producto():
     db.session.add(nuevo)
     db.session.commit()
     return product_schema.jsonify(nuevo), 201
+
+
 # Healthcheck route
 @product_bp.route("/", methods=["GET"])
 def healthcheck():
