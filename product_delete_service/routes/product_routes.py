@@ -19,3 +19,7 @@ def eliminar_producto(product_id):
 
     return jsonify({"message": f"Producto con id {product_id} eliminado correctamente"}), 200
 
+# Healthcheck route
+@product_bp.route("/", methods=["GET"])
+def healthcheck():
+    return jsonify({"status": "Service is up and running"}), 200
