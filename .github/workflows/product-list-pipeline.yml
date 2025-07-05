@@ -3,13 +3,13 @@ name: Pipeline for Product list Microservice
 on:
   push:
     branches:
-      - QA
+      - Production
     paths:
       - 'product_list_service/**'
       - '.github/workflows/product-list-pipeline.yml'
   pull_request:
     branches:
-      - QA
+      - Production
     paths:
       - 'product_list_service/**'
       - '.github/workflows/product-list-pipeline.yml'

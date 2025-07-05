@@ -3,13 +3,13 @@ name: Pipeline for Product find by name Microservice
 on:
   push:
     branches:
-      - QA
+      - Production
     paths:
       - 'product_find_by_name_service/**'
       - '.github/workflows/product-find-by-name-pipeline.yml'
   pull_request:
     branches:
-      - QA
+      - Production
     paths:
       - 'product_find_by_name_service/**'
       - '.github/workflows/product-find-by-name-pipeline.yml'
