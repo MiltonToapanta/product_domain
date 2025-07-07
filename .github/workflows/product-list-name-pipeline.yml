@@ -1,18 +1,18 @@
-name: Pipeline for Product list Microservice
+name: Pipeline for Product List Microservice
 
 on:
   push:
     branches:
       - Production
     paths:
-      - 'product_list_service/**'
-      - '.github/workflows/product-list-pipeline.yml'
+      - 'product_list_name_service/**'
+      - '.github/workflows/product-list-name-pipeline.yml'
   pull_request:
     branches:
       - Production
     paths:
-      - 'product_list_service/**'
-      - '.github/workflows/product-list-pipeline.yml'
+      - 'product_list_name_service/**'
+      - '.github/workflows/product-list-name-pipeline.yml'
 
 jobs:
   build-and-push-docker:
@@ -33,11 +33,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        working-directory: ./product_list_service
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product_list_service:latest .
+        working-directory: ./product_list_name_service
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product_list_name_service:latest .
 
       - name: Push Docker image to DockerHub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/product_list_service:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/product_list_name_service:latest
 
   deploy-to-ec2-instance:
     needs: build-and-push-docker
@@ -51,13 +51,13 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             echo "Pull, stop, and redeploy the Docker container"
-            docker pull ${{ secrets.DOCKER_USERNAME }}/product_list_service:latest
-            docker stop product_list_service || true
-            docker rm product_list_service || true
+            docker pull ${{ secrets.DOCKER_USERNAME }}/product_list_name_service:latest
+            docker stop product_list_name_service || true
+            docker rm product_list_name_service || true
             docker run --restart always \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              -e PORT=${{ secrets.PORT_LIST }} \
+              -e PORT=${{ secrets.PORT_LIST_NAME }} \  
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-              -d --name product_list_service \
-              -p ${{ secrets.PORT_LIST }}:${{ secrets.PORT_LIST }} \
-              ${{ secrets.DOCKER_USERNAME }}/product_list_service:latest
+              -d --name product_list_name_service \  
+              -p ${{ secrets.PORT_LIST_NAME }}:${{ secrets.PORT_LIST_NAME }} \  
+              ${{ secrets.DOCKER_USERNAME }}/product_list_name_service:latest
