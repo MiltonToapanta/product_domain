@@ -1,17 +1,17 @@
-name: Pipeline for Product List Microservice
+name: Pipeline for Product list Name Microservice
 
 on:
   push:
     branches:
       - Production
     paths:
-      - 'product_list_name_service/**'
+      - 'product_list_service/**'
       - '.github/workflows/product-list-name-pipeline.yml'
   pull_request:
     branches:
       - Production
     paths:
-      - 'product_list_name_service/**'
+      - 'product_list_service/**'
       - '.github/workflows/product-list-name-pipeline.yml'
 
 jobs:
@@ -56,8 +56,8 @@ jobs:
             docker rm product_list_name_service || true
             docker run --restart always \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              -e PORT=${{ secrets.PORT_LIST_NAME }} \  
+              -e PORT=${{ secrets.PORT_LISTNAME }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-              -d --name product_list_name_service \  
-              -p ${{ secrets.PORT_LIST_NAME }}:${{ secrets.PORT_LIST_NAME }} \  
+              -d --name product_list_name_service \
+              -p ${{ secrets.PORT_LIST_NAME }}:${{ secrets.PORT_LIST_NAME }} \
               ${{ secrets.DOCKER_USERNAME }}/product_list_name_service:latest
